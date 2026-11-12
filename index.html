@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Sajeel Mods — Portfolio Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --brand-pink:#ff2d7a;
+  --brand-purple:#a855f7;
+  --brand-cyan:#00d9ff;
+  --brand-grad:linear-gradient(135deg,#ff2d7a 0%,#a855f7 50%,#00d9ff 100%);
+  --brand-grad-soft:linear-gradient(135deg,rgba(255,45,122,.14),rgba(168,85,247,.10),rgba(0,217,255,.08));
+  --brand-glow:0 0 32px rgba(255,45,122,.32);
+  --bg:#06060c;
+  --surface:rgba(17,17,28,.68);
+  --border:rgba(255,255,255,.07);
+  --border-2:rgba(255,255,255,.13);
+  --border-brand:rgba(255,45,122,.28);
+  --text:#f4f4fa;
+  --dim:#8a8aa2;
+  --dim-2:#5a5a72;
+  --success:#22d3a4;
+  --danger:#ff4d6d;
+  --radius:16px;
+  --radius-sm:10px;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,-apple-system,Roboto,Arial,sans-serif;
+  background:var(--bg);color:var(--text);min-height:100vh;
+  font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(ellipse 55% 45% at 15% -10%, rgba(255,45,122,.16), transparent 65%),
+    radial-gradient(ellipse 50% 45% at 85% 0%, rgba(168,85,247,.13), transparent 65%),
+    radial-gradient(ellipse 55% 40% at 50% 110%, rgba(0,217,255,.08), transparent 70%);
+  background-attachment:fixed;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+  background-image:
+    linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);
+  background-size:56px 56px;
+  mask-image:radial-gradient(ellipse 70% 60% at 50% 0%,#000 20%,transparent 80%);
+  -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 0%,#000 20%,transparent 80%);
+}
+button,input,a,select,textarea{font-family:inherit}
+.wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:20px 16px 60px}
+
+/* Topbar */
+.topbar{
+  display:flex;align-items:center;gap:12px;padding:14px 18px;
+  background:var(--surface);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+  border:1px solid var(--border);border-radius:var(--radius);
+  box-shadow:0 8px 32px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.04);
+  margin-bottom:22px;position:sticky;top:12px;z-index:60;
+}
+.brand-mark{
+  width:42px;height:42px;flex:0 0 42px;border-radius:11px;
+  background:var(--brand-grad);display:flex;align-items:center;justify-content:center;
+  font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:#fff;
+  letter-spacing:.5px;box-shadow:0 4px 18px rgba(255,45,122,.4);
+  position:relative;overflow:hidden;
+}
+.brand-mark::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,.25) 50%,transparent 60%);
+  background-size:200% 200%;animation:shine 4s ease-in-out infinite;
+}
+@keyframes shine{0%,100%{background-position:200% 200%}50%{background-position:-100% -100%}}
+.brand-text{min-width:0;line-height:1.2}
+.brand-text h1{
+  font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;
+  letter-spacing:1px;color:var(--text);
+}
+.brand-text h1 span{background:var(--brand-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.brand-text p{font-size:11px;color:var(--dim);margin-top:2px}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.status-pill{
+  display:flex;align-items:center;gap:6px;
+  font-size:10.5px;font-weight:600;padding:5px 10px;border-radius:20px;
+  background:rgba(34,211,164,.1);color:#22d3a4;
+  border:1px solid rgba(34,211,164,.22);
+}
+.status-pill .dot{width:6px;height:6px;border-radius:50%;background:currentColor;animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 8px currentColor}50%{opacity:.35;box-shadow:0 0 4px currentColor}}
+
+/* Hero */
+.hero{text-align:center;margin-bottom:26px}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:5px 12px;border-radius:20px;background:var(--brand-grad-soft);
+  border:1px solid var(--border-brand);color:#ff8fb5;
+  font-size:10.5px;font-weight:700;letter-spacing:2px;margin-bottom:16px;
+  font-family:'Space Grotesk',sans-serif;
+}
+.hero h2{font-family:'Space Grotesk',sans-serif;font-size:36px;font-weight:700;letter-spacing:-.8px;line-height:1.14}
+.hero h2 .accent{background:var(--brand-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--dim);font-size:14px;margin-top:10px;max-width:540px;margin-left:auto;margin-right:auto}
+
+/* Layout */
+.layout{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+@media(max-width:960px){.layout{grid-template-columns:1fr}}
+
+/* Card */
+.card{
+  background:var(--surface);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--border);border-radius:var(--radius);
+  box-shadow:0 8px 32px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.035);
+  overflow:hidden;transition:border-color .25s;
+}
+.card:hover{border-color:var(--border-2)}
+.card-head{
+  padding:13px 18px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  background:rgba(255,255,255,.015);
+}
+.card-head h3{
+  font-family:'Space Grotesk',sans-serif;font-size:12.5px;font-weight:700;
+  letter-spacing:1.2px;color:var(--text);display:flex;align-items:center;gap:8px;
+}
+.card-head h3 .step{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:18px;height:18px;border-radius:5px;
+  background:var(--brand-grad-soft);color:#ff8fb5;font-size:9.5px;font-weight:800;
+  border:1px solid var(--border-brand);
+}
+.card-body{padding:16px 18px}
+
+/* Fields */
+.field{margin-bottom:16px}
+.field:last-child{margin-bottom:0}
+.field > label{
+  display:block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--dim);margin-bottom:7px;
+}
+.field input[type=text],.field input[type=tel],.field input[type=email],.field input[type=url],.field textarea,.field select{
+  width:100%;padding:11px 13px;border-radius:var(--radius-sm);
+  border:1px solid var(--border-2);background:rgba(0,0,0,.35);
+  color:var(--text);font-size:13.5px;outline:none;
+  transition:border-color .2s,box-shadow .2s;
+}
+.field input:focus,.field textarea:focus,.field select:focus{
+  border-color:var(--brand-pink);box-shadow:0 0 0 3px rgba(255,45,122,.12);
+}
+.field input::placeholder,.field textarea::placeholder{color:var(--dim-2)}
+.field textarea{min-height:80px;resize:vertical;line-height:1.6}
+.field select{cursor:pointer}
+.field select option{background:#1a1a24;color:#fff}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:520px){.row2{grid-template-columns:1fr}}
+.hint{font-size:11px;color:var(--dim-2);margin-top:5px;line-height:1.5}
+
+/* Segmented buttons */
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{
+  flex:1;min-width:75px;padding:9px 8px;border-radius:10px;
+  border:1px solid var(--border-2);background:rgba(255,255,255,.035);
+  color:#c5c5d0;font-size:11.5px;font-weight:600;cursor:pointer;
+  transition:all .18s;display:flex;align-items:center;justify-content:center;gap:5px;
+}
+.seg button:hover{background:rgba(255,255,255,.07)}
+.seg button.on{
+  background:var(--brand-grad);border-color:transparent;color:#fff;
+  box-shadow:0 4px 14px rgba(255,45,122,.35);
+}
+
+/* Swatches */
+.swatches{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.sw{
+  width:32px;height:32px;border-radius:50%;cursor:pointer;
+  border:3px solid transparent;transition:all .18s;flex:0 0 32px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.1);
+}
+.sw:hover{transform:scale(1.1)}
+.sw.on{border-color:#fff;box-shadow:0 0 0 2px var(--brand-pink),0 4px 12px rgba(0,0,0,.4)}
+.sw-custom{
+  width:32px;height:32px;border-radius:50%;border:2px dashed var(--border-2);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  position:relative;overflow:hidden;flex:0 0 32px;background:rgba(255,255,255,.03);
+}
+.sw-custom input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.sw-custom span{font-size:15px;pointer-events:none;color:var(--dim)}
+
+/* Photo */
+.photo-uploader{
+  display:flex;gap:12px;align-items:center;padding:12px;
+  border:1.5px dashed var(--border-2);border-radius:12px;
+  background:rgba(255,255,255,.02);transition:all .2s;cursor:pointer;
+}
+.photo-uploader.drag{border-color:var(--brand-pink);background:rgba(255,45,122,.06)}
+.photo-prev{
+  width:58px;height:58px;border-radius:50%;flex:0 0 58px;overflow:hidden;
+  background:var(--brand-grad);display:flex;align-items:center;justify-content:center;
+  font-size:20px;font-weight:800;color:#fff;border:2px solid var(--border-2);
+}
+.photo-prev img{width:100%;height:100%;object-fit:cover}
+.photo-info{flex:1;min-width:0}
+.photo-info p{font-size:12px;color:var(--dim);margin-bottom:6px}
+.photo-actions{display:flex;gap:6px;flex-wrap:wrap}
+
+/* Buttons */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  padding:10px 16px;border-radius:var(--radius-sm);
+  border:1px solid var(--border-2);background:rgba(255,255,255,.04);
+  color:var(--text);font-size:12.5px;font-weight:600;letter-spacing:.3px;
+  cursor:pointer;transition:all .22s ease;text-decoration:none;white-space:nowrap;
+}
+.btn:hover{background:rgba(255,255,255,.08)}
+.btn:active{transform:scale(.98)}
+.btn.primary{
+  background:var(--brand-grad);border:none;color:#fff;
+  box-shadow:0 4px 20px rgba(255,45,122,.35);
+}
+.btn.primary:hover{box-shadow:0 8px 32px rgba(255,45,122,.5);transform:translateY(-1px)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important;box-shadow:none!important}
+.btn.sm{padding:6px 11px;font-size:11px;border-radius:7px}
+.btn-block{width:100%;padding:13px;font-size:13px;letter-spacing:.5px}
+.btn.ghost{background:transparent}
+.btn.danger{color:#ff8095;border-color:rgba(255,77,109,.28);background:rgba(255,77,109,.06)}
+.btn.danger:hover{background:rgba(255,77,109,.15)}
+
+/* Skills chips */
+.skill-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.skill-chips:empty{display:none}
+.skill-chip{
+  display:inline-flex;align-items:center;gap:5px;padding:5px 5px 5px 11px;
+  border-radius:20px;background:rgba(255,45,122,.1);
+  border:1px solid rgba(255,45,122,.28);color:#ff889f;
+  font-size:12px;font-weight:600;
+}
+.skill-chip button{
+  width:16px;height:16px;border-radius:50%;border:none;
+  background:rgba(255,255,255,.15);color:inherit;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:9px;padding:0;
+}
+.skill-chip button:hover{background:rgba(255,255,255,.3)}
+
+/* Dynamic list */
+.list-items{display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
+.list-items:empty{display:none}
+.list-item{
+  display:flex;flex-direction:column;gap:6px;padding:10px;border-radius:11px;
+  background:rgba(255,255,255,.025);border:1px solid var(--border);
+}
+.list-item .li-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.list-item .li-num{font-size:10.5px;color:var(--dim-2);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.list-item input{
+  width:100%;padding:8px 10px;border-radius:8px;
+  border:1px solid var(--border);background:rgba(0,0,0,.3);
+  color:var(--text);font-size:12.5px;outline:none;
+}
+.list-item input:focus{border-color:var(--brand-pink)}
+.list-item .li-row{display:flex;gap:6px}
+.list-item .li-row>*{flex:1;min-width:0}
+.icon-btn{
+  width:28px;height:28px;padding:0;border-radius:7px;
+  border:1px solid var(--border);background:rgba(255,255,255,.04);
+  color:var(--dim);font-size:11px;cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;transition:all .15s;flex:0 0 28px;
+}
+.icon-btn:hover{color:var(--text);background:rgba(255,255,255,.09)}
+.icon-btn.remove:hover{color:#ff8095;border-color:rgba(255,77,109,.3);background:rgba(255,77,109,.08)}
+.add-btn{
+  width:100%;padding:10px;border-radius:10px;
+  border:1.5px dashed var(--border-2);background:transparent;
+  color:var(--dim);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;
+}
+.add-btn:hover{border-color:var(--brand-pink);color:#ff8fb5;background:rgba(255,45,122,.04)}
+
+/* Checkbox */
+.cb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+.cb{
+  display:flex;align-items:center;gap:8px;padding:9px 11px;
+  border-radius:10px;background:rgba(255,255,255,.03);
+  border:1px solid var(--border);cursor:pointer;font-size:12.5px;
+  color:#c5c5d0;transition:all .15s;user-select:none;
+}
+.cb:hover{background:rgba(255,255,255,.06)}
+.cb input{display:none}
+.cb .box{
+  width:16px;height:16px;border-radius:5px;flex:0 0 16px;
+  border:1.5px solid var(--border-2);display:flex;align-items:center;justify-content:center;
+  transition:all .15s;font-size:10px;color:transparent;
+}
+.cb input:checked + .box{background:var(--brand-grad);border-color:transparent;color:#fff}
+
+/* Tabs */
+.tabs{
+  display:flex;gap:4px;padding:8px;overflow-x:auto;
+  border-bottom:1px solid var(--border);scrollbar-width:none;
+}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  flex:1;min-width:85px;padding:9px 8px;border-radius:9px;
+  border:1px solid transparent;background:transparent;
+  color:var(--dim);font-size:12px;font-weight:600;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:5px;
+  transition:all .2s;white-space:nowrap;
+}
+.tab:hover{color:var(--text);background:rgba(255,255,255,.04)}
+.tab.on{
+  background:rgba(255,45,122,.1);color:#ff8fb5;
+  border-color:rgba(255,45,122,.28);
+}
+.tab-panel{display:none;padding:16px 18px}
+.tab-panel.on{display:block;animation:fadeIn .25s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* Preview */
+.preview-card{position:sticky;top:96px}
+@media(max-width:960px){.preview-card{position:static}}
+.device-row{display:flex;gap:4px;padding:4px;border-radius:10px;background:rgba(0,0,0,.3);border:1px solid var(--border)}
+.device-row button{
+  padding:6px 10px;border-radius:7px;border:none;background:transparent;
+  color:var(--dim);font-size:11px;font-weight:600;cursor:pointer;
+  display:flex;align-items:center;gap:4px;transition:all .15s;
+}
+.device-row button:hover{color:var(--text);background:rgba(255,255,255,.06)}
+.device-row button.on{background:rgba(255,255,255,.1);color:#fff}
+.pv-stage{padding:12px;background:rgba(0,0,0,.25);display:flex;justify-content:center;overflow:auto}
+.pv-wrap{
+  width:100%;border-radius:12px;overflow:hidden;
+  border:1px solid var(--border);background:#fff;
+  transition:width .3s ease,max-width .3s ease;
+  box-shadow:0 12px 40px rgba(0,0,0,.4);
+}
+.pv-wrap.tablet{width:768px;max-width:100%}
+.pv-wrap.mobile{width:390px;max-width:100%}
+#pv{width:100%;height:560px;border:none;display:block;background:#fff}
+@media(max-width:960px){#pv{height:480px}}
+
+/* Deploy section */
+.deploy-banner{
+  padding:14px;border-radius:12px;
+  background:var(--brand-grad-soft);border:1px solid var(--border-brand);
+  color:#ff8fb5;font-family:'Space Grotesk',sans-serif;
+  font-size:12px;font-weight:700;letter-spacing:1.5px;text-align:center;
+  margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.deploy-banner::before{
+  content:'';width:7px;height:7px;border-radius:50%;
+  background:#22d3a4;box-shadow:0 0 10px #22d3a4;
+}
+.link-row{display:flex;gap:6px;margin-bottom:10px}
+.link-input{
+  flex:1;background:rgba(0,0,0,.45);border:1px solid var(--border);
+  border-radius:9px;padding:10px 12px;color:#00d9ff;
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11.5px;
+  outline:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;
+}
+.result-actions{display:flex;gap:8px;flex-wrap:wrap}
+.result-actions .btn{flex:1;min-width:120px}
+.empty{
+  text-align:center;padding:26px 10px;color:var(--dim-2);
+}
+.empty-icon{
+  width:52px;height:52px;border-radius:14px;margin:0 auto 12px;
+  background:var(--brand-grad-soft);border:1px solid var(--border-brand);
+  display:flex;align-items:center;justify-content:center;
+  color:#ff8fb5;font-size:22px;
+}
+.empty p{font-size:12.5px;line-height:1.6}
+.msg{font-size:12px;color:var(--danger);min-height:16px;margin-top:10px;font-weight:500;text-align:center}
+.msg.ok{color:var(--success)}
+
+/* Footer */
+.footer{
+  text-align:center;margin-top:32px;padding-top:24px;
+  border-top:1px solid var(--border);font-size:12px;
+  color:var(--dim-2);line-height:2;
+}
+.footer-brand{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:4px}
+.footer-brand b{background:var(--brand-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+
+/* Toasts */
+.toasts{
+  position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
+  z-index:1000;display:flex;flex-direction:column;gap:8px;align-items:center;
+  pointer-events:none;width:100%;padding:0 16px;
+}
+.toast{
+  padding:10px 16px;border-radius:10px;
+  background:rgba(17,17,28,.95);border:1px solid var(--border-2);
+  color:var(--text);font-size:12.5px;font-weight:600;
+  box-shadow:0 10px 30px rgba(0,0,0,.5);
+  max-width:400px;text-align:center;
+  animation:toastIn .28s cubic-bezier(.34,1.56,.64,1);
+  backdrop-filter:blur(16px);
+}
+.toast.success{border-color:rgba(34,211,164,.45);color:#7de6c5}
+.toast.error{border-color:rgba(255,77,109,.45);color:#ff9caf}
+.toast.out{animation:toastOut .22s forwards}
+@keyframes toastIn{from{opacity:0;transform:translateY(16px) scale(.95)}to{opacity:1;transform:none}}
+@keyframes toastOut{to{opacity:0;transform:translateY(10px) scale(.95)}}
+
+@media(max-width:600px){
+  .wrap{padding:14px 12px 40px}
+  .topbar{padding:11px 14px;gap:10px;top:8px}
+  .brand-mark{width:38px;height:38px;flex-basis:38px;font-size:15px}
+  .brand-text h1{font-size:14px}
+  .brand-text p{display:none}
+  .hero h2{font-size:24px}
+  .tab-panel{padding:14px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="topbar">
+    <div class="brand-mark">SM</div>
+    <div class="brand-text">
+      <h1>SAJEEL <span>MODS</span></h1>
+      <p>Premium Portfolio Builder</p>
+    </div>
+    <div class="topbar-right">
+      <span class="status-pill"><span class="dot"></span>Deploy Ready</span>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-badge">✦ PREMIUM TOOL ✦</div>
+    <h2>Build. Preview. <span class="accent">Deploy.</span></h2>
+    <p>Apni portfolio website banao — live preview dekho, download karo, ya ek click mein live deploy karo.</p>
+  </section>
+
+  <main class="layout">
+
+    <!-- BUILDER -->
+    <section class="card">
+      <div class="card-head">
+        <h3><span class="step">1</span>BUILD YOUR PORTFOLIO</h3>
+        <div style="display:flex;gap:6px">
+          <button class="btn sm ghost" id="sampleBtn">✨ Sample</button>
+          <button class="btn sm ghost" id="resetBtn">↺ Reset</button>
+        </div>
+      </div>
+
+      <nav class="tabs" id="tabs">
+        <button class="tab on" data-tab="identity">👤 Identity</button>
+        <button class="tab" data-tab="about">📝 About</button>
+        <button class="tab" data-tab="work">💼 Work</button>
+        <button class="tab" data-tab="contact">📞 Contact</button>
+        <button class="tab" data-tab="design">🎨 Design</button>
+      </nav>
+
+      <!-- Identity -->
+      <div class="tab-panel on" id="panel-identity">
+        <div class="field">
+          <label>Portfolio Type</label>
+          <div class="seg" id="typeSeg">
+            <button data-t="designer" class="on">🎨 Designer</button>
+            <button data-t="developer">💻 Developer</button>
+            <button data-t="photographer">📸 Photographer</button>
+            <button data-t="freelancer">💼 Freelancer</button>
+            <button data-t="youtuber">▶️ YouTuber</button>
+            <button data-t="student">🎓 Student</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Profile Photo <span style="color:var(--dim-2);text-transform:none;letter-spacing:0;font-weight:500">(optional)</span></label>
+          <div class="photo-uploader" id="photoUploader">
+            <div class="photo-prev" id="photoPrev">?</div>
+            <div class="photo-info">
+              <p>Click or drag & drop — JPG / PNG</p>
+              <div class="photo-actions">
+                <button class="btn sm" id="uploadBtn">📁 Choose</button>
+                <button class="btn sm ghost danger" id="removePhoto">Remove</button>
+              </div>
+            </div>
+          </div>
+          <input type="file" id="fileInp" accept="image/*" hidden>
+        </div>
+
+        <div class="field">
+          <label>Full Name *</label>
+          <input type="text" id="fName" placeholder="e.g. Ali Raza" maxlength="50">
+        </div>
+
+        <div class="field">
+          <label>Role / Title *</label>
+          <input type="text" id="fRole" placeholder="e.g. Graphic Designer" maxlength="60">
+        </div>
+
+        <div class="field">
+          <label>Tagline</label>
+          <input type="text" id="fTag" placeholder="e.g. Creative designs that make brands shine ✨" maxlength="100">
+          <p class="hint">Ek chhoti line jo aapko sab se alag dikhaye</p>
+        </div>
+
+        <div class="field">
+          <label>Location</label>
+          <input type="text" id="fLoc" placeholder="e.g. Lahore, Pakistan" maxlength="60">
+        </div>
+      </div>
+
+      <!-- About -->
+      <div class="tab-panel" id="panel-about">
+        <div class="field">
+          <label>About You</label>
+          <textarea id="fAbout" placeholder="Apne baare mein 2-3 line likho — kya karte ho, kitna experience hai..." maxlength="500"></textarea>
+          <p class="hint">💡 Simple rakho — yeh aapki pehchan hai</p>
+        </div>
+
+        <div class="field">
+          <label>Skills</label>
+          <div class="skill-chips" id="skillsChips"></div>
+          <input type="text" id="skillInput" placeholder="Type skill + press Enter">
+          <p class="hint">Comma ya Enter dabao — chip ban jayegi</p>
+        </div>
+      </div>
+
+      <!-- Work -->
+      <div class="tab-panel" id="panel-work">
+        <div class="field">
+          <label>Projects / Work</label>
+          <div class="list-items" id="projectsList"></div>
+          <button class="add-btn" id="addProject">+ Add Project</button>
+        </div>
+
+        <div class="field">
+          <label>Services (optional)</label>
+          <div class="list-items" id="servicesList"></div>
+          <button class="add-btn" id="addService">+ Add Service</button>
+        </div>
+
+        <div class="field">
+          <label>Stats (optional)</label>
+          <div class="list-items" id="statsList"></div>
+          <button class="add-btn" id="addStat">+ Add Stat</button>
+        </div>
+
+        <div class="field">
+          <label>Testimonials (optional)</label>
+          <div class="list-items" id="testiList"></div>
+          <button class="add-btn" id="addTesti">+ Add Testimonial</button>
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div class="tab-panel" id="panel-contact">
+        <div class="row2">
+          <div class="field">
+            <label>WhatsApp</label>
+            <input type="tel" id="fWa" placeholder="e.g. 03061234567">
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input type="email" id="fEmail" placeholder="you@email.com">
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>Instagram</label>
+            <input type="text" id="fIg" placeholder="username">
+          </div>
+          <div class="field">
+            <label>Facebook</label>
+            <input type="text" id="fFb" placeholder="username">
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>Twitter / X</label>
+            <input type="text" id="fTw" placeholder="username">
+          </div>
+          <div class="field">
+            <label>LinkedIn</label>
+            <input type="text" id="fLi" placeholder="profile slug">
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>GitHub</label>
+            <input type="text" id="fGh" placeholder="username">
+          </div>
+          <div class="field">
+            <label>YouTube</label>
+            <input type="text" id="fYt" placeholder="handle">
+          </div>
+        </div>
+        <div class="field">
+          <label>TikTok</label>
+          <input type="text" id="fTt" placeholder="username">
+        </div>
+        <p class="hint">💡 Sirf woh bharo jo share karna chahte ho</p>
+      </div>
+
+      <!-- Design -->
+      <div class="tab-panel" id="panel-design">
+        <div class="field">
+          <label>Accent Color</label>
+          <div class="swatches" id="colorSw">
+            <div class="sw on" data-c="#ff3366" style="background:#ff3366"></div>
+            <div class="sw" data-c="#f5b301" style="background:#f5b301"></div>
+            <div class="sw" data-c="#22c55e" style="background:#22c55e"></div>
+            <div class="sw" data-c="#3b82f6" style="background:#3b82f6"></div>
+            <div class="sw" data-c="#a855f7" style="background:#a855f7"></div>
+            <div class="sw" data-c="#06b6d4" style="background:#06b6d4"></div>
+            <div class="sw" data-c="#f97316" style="background:#f97316"></div>
+            <div class="sw-custom" title="Custom">
+              <span>+</span>
+              <input type="color" id="accentCustom" value="#ff3366">
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Font Style</label>
+          <select id="fontSel">
+            <option value="Poppins">Poppins — modern & friendly</option>
+            <option value="Inter">Inter — clean & sharp</option>
+            <option value="Outfit">Outfit — geometric</option>
+            <option value="Space Grotesk">Space Grotesk — techy</option>
+            <option value="DM Sans">DM Sans — neutral</option>
+            <option value="Sora">Sora — futuristic</option>
+            <option value="Manrope">Manrope — elegant</option>
+            <option value="Playfair Display">Playfair — luxury serif</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Site Theme</label>
+          <div class="seg" id="siteThemeSeg">
+            <button data-v="dark" class="on">🌙 Dark</button>
+            <button data-v="light">☀️ Light</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Show / Hide Sections</label>
+          <div class="cb-grid" id="sectionsGrid">
+            <label class="cb"><input type="checkbox" data-k="about" checked><span class="box">✓</span>About</label>
+            <label class="cb"><input type="checkbox" data-k="skills" checked><span class="box">✓</span>Skills</label>
+            <label class="cb"><input type="checkbox" data-k="projects" checked><span class="box">✓</span>Projects</label>
+            <label class="cb"><input type="checkbox" data-k="services"><span class="box">✓</span>Services</label>
+            <label class="cb"><input type="checkbox" data-k="stats"><span class="box">✓</span>Stats</label>
+            <label class="cb"><input type="checkbox" data-k="testimonials"><span class="box">✓</span>Testimonials</label>
+            <label class="cb"><input type="checkbox" data-k="contact" checked><span class="box">✓</span>Contact</label>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- PREVIEW + ACTIONS -->
+    <section class="card preview-card">
+      <div class="card-head">
+        <h3><span class="step">2</span>PREVIEW & DEPLOY</h3>
+        <div class="device-row" id="deviceRow">
+          <button data-d="desktop" class="on">🖥</button>
+          <button data-d="tablet">📱</button>
+          <button data-d="mobile">📲</button>
+        </div>
+      </div>
+
+      <div class="pv-stage">
+        <div class="pv-wrap" id="pvWrap">
+          <iframe id="pv" title="Portfolio preview" sandbox="allow-scripts allow-same-origin"></iframe>
+        </div>
+      </div>
+
+      <!-- ACTIONS -->
+      <div class="card-body" style="border-top:1px solid var(--border);background:rgba(255,255,255,.015)">
+
+        <button class="btn primary btn-block" id="deployBtn" style="margin-bottom:10px">
+          <span>🚀 DEPLOY TO SAJEEL HOSTING</span>
+        </button>
+
+        <div class="result-actions" style="margin-bottom:12px">
+          <button class="btn" id="dlBtn">⬇ Download HTML</button>
+          <button class="btn" id="copyBtn">📋 Copy HTML</button>
+        </div>
+
+        <p class="msg" id="deployMsg"></p>
+
+        <!-- Deploy Result -->
+        <div id="deployBox" style="display:none;margin-top:8px">
+          <div class="deploy-banner">✅ DEPLOYED LIVE</div>
+          <div class="link-row">
+            <input readonly id="deployLink" class="link-input">
+            <button class="btn sm" id="copyDeploy">Copy</button>
+          </div>
+          <div class="result-actions">
+            <a class="btn primary" id="openDeploy" target="_blank" rel="noopener">🌐 Visit Live Site</a>
+          </div>
+          <p class="hint" style="margin-top:12px;text-align:center">
+            ⓘ Live link share karo — 30 seconds mein ready ho jayega.
+          </p>
+        </div>
+
+        <div class="empty" id="emptyDeploy">
+          <div class="empty-icon">🚀</div>
+          <p>Fill your details and click <b>Deploy</b> to get a live link.</p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-brand">Crafted by <b>SAJEEL MODS</b></div>
+    <p>&copy; 2025 SAJEEL MODS · All Rights Reserved</p>
+  </footer>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<script>
+(function(){
+'use strict';
+
+const $ = id => document.getElementById(id);
+const STORAGE_KEY = 'sm_portfolio_v4';
+const DEPLOY_API = 'https://sajeel-hosting.vercel.app/api/deploy';
+
+const TYPES = {
+  designer:    {label:'Designer',     accent:'#ff3366', work:'Portfolio',    hero:'DESIGNER'},
+  developer:   {label:'Developer',    accent:'#3b82f6', work:'Projects',     hero:'DEVELOPER'},
+  photographer:{label:'Photographer', accent:'#f5b301', work:'Gallery',      hero:'PHOTOGRAPHER'},
+  freelancer:  {label:'Freelancer',   accent:'#22c55e', work:'Services',     hero:'FREELANCER'},
+  youtuber:    {label:'YouTuber',     accent:'#ef4444', work:'Videos',       hero:'CREATOR'},
+  student:     {label:'Student',      accent:'#a855f7', work:'Projects',     hero:'STUDENT'}
+};
+
+const SAMPLES = {
+  designer: {
+    name:'Ali Raza', role:'Graphic Designer',
+    tag:'Creative designs that make brands shine ✨',
+    about:'Main 3 saal se graphic design kar raha hun. YouTube thumbnails, logos aur social media posts banata hun. Mera maqsad har client ko best quality design dena hai.',
+    loc:'Lahore, Pakistan',
+    skills:['Photoshop','Illustrator','Canva','Logo Design','YouTube Thumbnails','Social Media Design'],
+    projects:[
+      {t:'YouTube Thumbnail Pack', d:'50+ gaming thumbnails designed for top creators'},
+      {t:'Brand Logo Design', d:'Modern logo for a clothing brand'},
+      {t:'Instagram Post Designs', d:'30 posts designed for a food page'}
+    ],
+    services:[
+      {t:'Logo Design', d:'Modern & minimal logos'},
+      {t:'Thumbnail Design', d:'Click-worthy YouTube thumbnails'}
+    ],
+    stats:[{n:'50+', l:'Happy Clients'},{n:'3+', l:'Years Experience'},{n:'200+', l:'Projects'}],
+    testimonials:[{q:'Ali ne meri brand ka look completely change kar diya!', name:'Ahmed', role:'Business Owner'}],
+    socials:{wa:'03061234567', email:'ali@email.com', instagram:'ali.designs', facebook:'', twitter:'', linkedin:'', github:'', youtube:'', tiktok:''}
+  },
+  developer: {
+    name:'Bilal Ahmed', role:'Full-Stack Developer',
+    tag:'Building fast & scalable web applications 🚀',
+    about:'Main 4 saal se web development kar raha hun. React, Node.js aur PostgreSQL ke saath modern web apps banata hun.',
+    loc:'Karachi, Pakistan',
+    skills:['React','Node.js','TypeScript','Next.js','PostgreSQL','Tailwind CSS'],
+    projects:[
+      {t:'E-Commerce Platform', d:'Full-stack store with Stripe payments'},
+      {t:'SaaS Dashboard', d:'Analytics dashboard for a startup'}
+    ],
+    services:[{t:'Web Development', d:'Full-stack applications'}],
+    stats:[{n:'30+', l:'Projects'},{n:'4+', l:'Years'},{n:'15+', l:'Clients'}],
+    testimonials:[],
+    socials:{wa:'03009876543', email:'bilal@dev.com', instagram:'', facebook:'', twitter:'bilaldev', linkedin:'bilal-ahmed', github:'bilaldev', youtube:'', tiktok:''}
+  },
+  photographer: {
+    name:'Sara Malik', role:'Wedding Photographer',
+    tag:'Capturing moments that last forever 📸',
+    about:'Main 5 saal se wedding aur portrait photography kar rahi hun. Natural light aur candid moments meri specialty hain.',
+    loc:'Islamabad, Pakistan',
+    skills:['Wedding Photography','Portrait','Lightroom','Photoshop','Studio Lighting'],
+    projects:[
+      {t:'Wedding Stories', d:'50+ weddings captured across Pakistan'},
+      {t:'Portrait Series', d:'Editorial portraits for local brands'}
+    ],
+    services:[{t:'Wedding Coverage', d:'Full-day wedding shoots'}],
+    stats:[{n:'80+', l:'Weddings'},{n:'5+', l:'Years'},{n:'120+', l:'Clients'}],
+    testimonials:[],
+    socials:{wa:'03211112222', email:'sara@photos.pk', instagram:'sara.captures', facebook:'', twitter:'', linkedin:'', github:'', youtube:'', tiktok:''}
+  },
+  freelancer: {
+    name:'Hamza Khan', role:'Digital Marketer',
+    tag:'Helping brands grow through smart marketing 📈',
+    about:'Main 3 saal se digital marketing kar raha hun. Facebook ads, Instagram growth aur email marketing mein expert hun.',
+    loc:'Faisalabad, Pakistan',
+    skills:['Facebook Ads','Google Ads','SEO','Email Marketing','Analytics'],
+    projects:[
+      {t:'E-Commerce Growth', d:'Scaled a store from $5k to $30k/month'},
+      {t:'Instagram Growth', d:'Grew a page from 10k to 100k followers'}
+    ],
+    services:[{t:'Paid Ads', d:'Facebook & Google ad campaigns'}],
+    stats:[{n:'25+', l:'Clients'},{n:'$100k+', l:'Ad Spend'},{n:'ROI', l:'Focused'}],
+    testimonials:[],
+    socials:{wa:'03334445555', email:'hamza@marketing.pk', instagram:'hamza.marketing', facebook:'', twitter:'', linkedin:'hamza-khan', github:'', youtube:'', tiktok:''}
+  },
+  youtuber: {
+    name:'Ayesha Khan', role:'Content Creator',
+    tag:'Videos that people love to watch 🎬',
+    about:'Main 2 saal se YouTube aur TikTok par content bana rahi hun. Mere channel par 50k+ subscribers hain.',
+    loc:'Karachi, Pakistan',
+    skills:['Video Editing','Script Writing','Thumbnail Design','Voice Over','Social Media'],
+    projects:[
+      {t:'Viral Vlog Series', d:'10 vlogs — 2M+ total views'},
+      {t:'Shorts Channel', d:'500+ shorts, 100k subscribers'}
+    ],
+    services:[{t:'Sponsored Videos', d:'Brand promotions'}],
+    stats:[{n:'50k+', l:'Subscribers'},{n:'2M+', l:'Total Views'},{n:'100+', l:'Videos'}],
+    testimonials:[],
+    socials:{wa:'03451112233', email:'ayesha@creator.pk', instagram:'ayesha.creates', facebook:'', twitter:'', linkedin:'', github:'', youtube:'ayeshacreates', tiktok:'ayesha.creates'}
+  },
+  student: {
+    name:'Zain Ali', role:'CS Student & Coder',
+    tag:'Learning today, building tomorrow 💻',
+    about:'Main final year CS student hun. Web development aur AI mein interest rakhta hun.',
+    loc:'Lahore, Pakistan',
+    skills:['Python','JavaScript','React','Data Structures','Machine Learning','Git'],
+    projects:[
+      {t:'Portfolio Website', d:'Personal site built with React'},
+      {t:'Task Manager App', d:'Full-stack app with Firebase'}
+    ],
+    services:[],
+    stats:[{n:'3', l:'Projects'},{n:'Final', l:'Year'},{n:'Open', l:'To Work'}],
+    testimonials:[],
+    socials:{wa:'03007778899', email:'zain@student.pk', instagram:'zain.codes', facebook:'', twitter:'', linkedin:'zain-ali', github:'zaincodes', youtube:'', tiktok:''}
+  }
+};
+
+let state = {
+  type:'designer', accent:'#ff3366', font:'Poppins', siteTheme:'dark',
+  photo:null, name:'', role:'', tag:'', about:'', loc:'',
+  skills:[], projects:[{t:'',d:''}], services:[], stats:[], testimonials:[],
+  socials:{wa:'', email:'', instagram:'', facebook:'', twitter:'', linkedin:'', github:'', youtube:'', tiktok:''},
+  sections:{about:true, skills:true, projects:true, services:false, stats:false, testimonials:false, contact:true}
+};
+
+function esc(s){
+  return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function initials(name){
+  const parts = String(name||'?').trim().split(/\s+/);
+  const a = (parts[0]||'?')[0]||'?';
+  const b = parts[1]?parts[1][0]:'';
+  return (a+b).toUpperCase();
+}
+function waLink(num){
+  const d = String(num||'').replace(/[^0-9]/g,'');
+  if (!d) return '';
+  let intl = d;
+  if (d.startsWith('00')) intl = d.slice(2);
+  else if (d.startsWith('0')) intl = '92'+d.slice(1);
+  else if (d.startsWith('92')) intl = d;
+  else if (d.length===10) intl = '92'+d;
+  return 'https://wa.me/'+intl;
+}
+function toast(msg, type){
+  const wrap = $('toasts');
+  const el = document.createElement('div');
+  el.className = 'toast ' + (type||'');
+  el.textContent = msg;
+  wrap.appendChild(el);
+  setTimeout(()=>{el.classList.add('out');setTimeout(()=>el.remove(),230);},2800);
+}
+
+/* ===== BUILD HTML ===== */
+function buildHTML(s){
+  const t = TYPES[s.type] || TYPES.designer;
+  const accent = s.accent || t.accent;
+  const font = s.font || 'Poppins';
+  const fontParam = font.replace(/ /g,'+');
+  const siteTheme = s.siteTheme || 'dark';
+
+  const avatar = s.photo
+    ? `<img src="${s.photo}" alt="${esc(s.name)}">`
+    : `<span>${esc(initials(s.name))}</span>`;
+
+  const wa = waLink(s.socials.wa);
+  const email = (s.socials.email||'').trim();
+  const ig = (s.socials.instagram||'').replace('@','').trim();
+  const fb = (s.socials.facebook||'').trim();
+  const tw = (s.socials.twitter||'').replace('@','').trim();
+  const li = (s.socials.linkedin||'').trim();
+  const gh = (s.socials.github||'').trim();
+  const yt = (s.socials.youtube||'').trim();
+  const tt = (s.socials.tiktok||'').replace('@','').trim();
+
+  const skills = (s.skills||[]).filter(x=>String(x).trim());
+  const projects = (s.projects||[]).filter(p=>p.t&&p.t.trim());
+  const services = (s.services||[]).filter(p=>p.t&&p.t.trim());
+  const stats = (s.stats||[]).filter(x=>x.n&&x.n.trim());
+  const testi = (s.testimonials||[]).filter(x=>x.q&&x.q.trim());
+
+  const socialLinks = [];
+  if (wa) socialLinks.push({href:wa, label:'WhatsApp', icon:'💬', val:s.socials.wa});
+  if (email) socialLinks.push({href:'mailto:'+email, label:'Email', icon:'✉️', val:email});
+  if (ig) socialLinks.push({href:'https://instagram.com/'+esc(ig), label:'Instagram', icon:'📸', val:'@'+esc(ig)});
+  if (fb) socialLinks.push({href:'https://facebook.com/'+esc(fb), label:'Facebook', icon:'👍', val:esc(fb)});
+  if (tw) socialLinks.push({href:'https://twitter.com/'+esc(tw), label:'Twitter', icon:'🐦', val:'@'+esc(tw)});
+  if (li) socialLinks.push({href:'https://linkedin.com/in/'+esc(li), label:'LinkedIn', icon:'💼', val:esc(li)});
+  if (gh) socialLinks.push({href:'https://github.com/'+esc(gh), label:'GitHub', icon:'🐙', val:esc(gh)});
+  if (yt) socialLinks.push({href:'https://youtube.com/@'+esc(yt), label:'YouTube', icon:'▶️', val:'@'+esc(yt)});
+  if (tt) socialLinks.push({href:'https://tiktok.com/@'+esc(tt), label:'TikTok', icon:'🎵', val:'@'+esc(tt)});
+
+  const navLinks = [];
+  if (s.sections.about) navLinks.push('<a href="#about">About</a>');
+  if (s.sections.skills && skills.length) navLinks.push('<a href="#skills">Skills</a>');
+  if (s.sections.projects && projects.length) navLinks.push('<a href="#work">'+esc(t.work)+'</a>');
+  if (s.sections.services && services.length) navLinks.push('<a href="#services">Services</a>');
+  if (s.sections.testimonials && testi.length) navLinks.push('<a href="#reviews">Reviews</a>');
+  if (s.sections.contact && socialLinks.length) navLinks.push('<a href="#contact">Contact</a>');
+
+  const nameParts = String(s.name||'Your Name').trim().split(/\s+/);
+  const first = nameParts[0] || '';
+  const rest = nameParts.slice(1).join(' ');
+
+  let sectionsHTML = '';
+
+  if (s.sections.about && s.about.trim()){
+    sectionsHTML += `
+  <section id="about" class="section reveal">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">ABOUT</span><h2>About Me</h2></div>
+      <p class="lead">${esc(s.about)}</p>
+    </div>
+  </section>`;
+  }
+
+  if (s.sections.skills && skills.length){
+    sectionsHTML += `
+  <section id="skills" class="section reveal">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">TOOLKIT</span><h2>Skills & Expertise</h2></div>
+      <div class="chips">${skills.map(x=>`<span class="chip">${esc(x)}</span>`).join('')}</div>
+    </div>
+  </section>`;
+  }
+
+  if (s.sections.projects && projects.length){
+    sectionsHTML += `
+  <section id="work" class="section reveal">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">SELECTED WORK</span><h2>${esc(t.work)}</h2></div>
+      <div class="grid">${projects.map((p,i)=>`
+        <div class="card">
+          <div class="card-num">${String(i+1).padStart(2,'0')}</div>
+          <h3>${esc(p.t)}</h3>
+          <p>${esc(p.d)}</p>
+        </div>`).join('')}</div>
+    </div>
+  </section>`;
+  }
+
+  if (s.sections.services && services.length){
+    sectionsHTML += `
+  <section id="services" class="section reveal">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">WHAT I DO</span><h2>Services</h2></div>
+      <div class="grid">${services.map(x=>`
+        <div class="card">
+          <h3>${esc(x.t)}</h3>
+          <p>${esc(x.d)}</p>
+        </div>`).join('')}</div>
+    </div>
+  </section>`;
+  }
+
+  if (s.sections.stats && stats.length){
+    sectionsHTML += `
+  <section class="section reveal">
+    <div class="wrap">
+      <div class="stats-grid">${stats.map(x=>`
+        <div class="stat">
+          <div class="stat-n">${esc(x.n)}</div>
+          <div class="stat-l">${esc(x.l)}</div>
+        </div>`).join('')}</div>
+    </div>
+  </section>`;
+  }
+
+  if (s.sections.testimonials && testi.length){
+    sectionsHTML += `
+  <section id="reviews" class="section reveal">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">FEEDBACK</span><h2>What Clients Say</h2></div>
+      <div class="grid">${testi.map(x=>`
+        <div class="card testi">
+          <div class="quote">"</div>
+          <p>${esc(x.q)}</p>
+          <div class="testi-meta"><b>${esc(x.name)}</b>${x.role?' · '+esc(x.role):''}</div>
+        </div>`).join('')}</div>
+    </div>
+  </section>`;
+  }
+
+  if (s.sections.contact && socialLinks.length){
+    sectionsHTML += `
+  <section id="contact" class="section reveal">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">LET'S TALK</span><h2>Get In Touch</h2></div>
+      <p class="lead" style="margin-bottom:24px">Kisi bhi kaam ya collaboration ke liye rabta karo.</p>
+      <div class="contact-grid">${socialLinks.map(l=>`
+        <a href="${l.href}" target="_blank" rel="noopener" class="contact-card">
+          <span class="ci">${l.icon}</span>
+          <div><b>${l.label}</b><span>${l.val}</span></div>
+        </a>`).join('')}</div>
+    </div>
+  </section>`;
+  }
+
+  return `<!DOCTYPE html>
+<html lang="en" data-theme="${siteTheme}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${esc(s.name)} — ${esc(s.role)}</title>
+<meta name="description" content="${esc(s.tag || s.role)}">
+<meta property="og:title" content="${esc(s.name)} — ${esc(s.role)}">
+<meta property="og:description" content="${esc(s.tag || s.role)}">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=${fontParam}:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --accent:${accent};
+  --accent-soft:${accent}22;
+  --accent-glow:${accent}55;
+  --bg:#0a0a0f;
+  --text:#ffffff;
+  --dim:#a0a0b0;
+  --dim2:#7a7a8a;
+  --card:rgba(255,255,255,.035);
+  --card-hover:rgba(255,255,255,.06);
+  --border:rgba(255,255,255,.08);
+  --border2:rgba(255,255,255,.15);
+  --nav-bg:rgba(10,10,15,.75);
+}
+[data-theme="light"]{
+  --bg:#fafafc;
+  --text:#0a0a0f;
+  --dim:#555566;
+  --dim2:#7a7a8a;
+  --card:#ffffff;
+  --card-hover:#ffffff;
+  --border:rgba(0,0,0,.08);
+  --border2:rgba(0,0,0,.15);
+  --nav-bg:rgba(250,250,252,.8);
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:'${font}',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.65;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:-1;
+  background:
+    radial-gradient(ellipse 70% 45% at 50% 0%, var(--accent-soft), transparent 65%),
+    radial-gradient(ellipse 50% 35% at 100% 100%, var(--accent-soft), transparent 70%);
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px}
+
+.nav{position:sticky;top:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-in{max-width:960px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.nav-logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:15px}
+.nav-logo .dot{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--accent),#ff6b3d);display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;font-weight:800}
+.nav-links{display:flex;gap:2px;flex-wrap:wrap}
+.nav-links a{padding:7px 12px;border-radius:8px;font-size:13px;font-weight:600;color:var(--dim);transition:all .2s}
+.nav-links a:hover{color:var(--text);background:var(--card)}
+
+.hero{padding:80px 0 60px;text-align:center}
+.avatar{width:140px;height:140px;border-radius:50%;margin:0 auto 24px;background:linear-gradient(135deg,var(--accent),#ff6b3d);display:flex;align-items:center;justify-content:center;font-size:52px;font-weight:800;color:#fff;border:4px solid var(--border2);box-shadow:0 0 60px var(--accent-glow),0 20px 50px rgba(0,0,0,.3);overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.eyebrow-pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;letter-spacing:2.5px;font-weight:700;color:var(--accent);border:1px solid var(--accent-glow);background:var(--accent-soft);padding:7px 14px;border-radius:30px;margin-bottom:20px;text-transform:uppercase}
+h1.hero-name{font-size:52px;font-weight:800;line-height:1.1;letter-spacing:-1px}
+h1.hero-name span{background:linear-gradient(135deg,var(--accent),#ff6b3d);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero-role{font-size:19px;color:var(--dim);margin-top:12px;font-weight:500}
+.hero-tag{font-size:15.5px;color:var(--dim2);margin-top:12px;max-width:600px;margin-left:auto;margin-right:auto}
+.hero-cta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+.hero-cta a{padding:13px 26px;border-radius:30px;font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:8px;transition:all .25s;border:1px solid transparent}
+.hero-cta .btn-primary{background:linear-gradient(135deg,var(--accent),#ff6b3d);color:#fff;box-shadow:0 8px 24px var(--accent-glow)}
+.hero-cta .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px var(--accent-glow)}
+.hero-cta .btn-ghost{background:var(--card);color:var(--text);border-color:var(--border2)}
+.hero-cta .btn-ghost:hover{background:var(--card-hover);transform:translateY(-2px)}
+
+.section{padding:64px 0}
+.section-head{margin-bottom:32px}
+.eyebrow{display:block;font-size:11px;letter-spacing:3px;font-weight:700;color:var(--accent);margin-bottom:8px}
+.section-head h2{font-size:34px;font-weight:800;letter-spacing:-.5px}
+.lead{font-size:16px;color:var(--dim);max-width:720px}
+
+.chips{display:flex;gap:10px;flex-wrap:wrap}
+.chip{padding:10px 18px;border-radius:30px;background:var(--card);border:1px solid var(--border2);font-size:13.5px;font-weight:500;transition:all .2s}
+.chip:hover{background:var(--accent-soft);border-color:var(--accent-glow);color:var(--accent);transform:translateY(-2px)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:26px;position:relative;transition:all .3s}
+.card:hover{background:var(--card-hover);border-color:var(--border2);transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,.15)}
+.card-num{font-size:12px;font-weight:800;color:var(--accent);letter-spacing:2px;margin-bottom:10px}
+.card h3{font-size:18px;font-weight:700;margin-bottom:8px;line-height:1.35}
+.card p{font-size:14px;color:var(--dim);line-height:1.6}
+
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px}
+.stat{text-align:center;padding:26px 14px;border-radius:16px;background:var(--card);border:1px solid var(--border);transition:all .25s}
+.stat:hover{background:var(--card-hover);transform:translateY(-3px)}
+.stat-n{font-size:34px;font-weight:800;letter-spacing:-1px;background:linear-gradient(135deg,var(--accent),#ff6b3d);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.stat-l{font-size:12.5px;color:var(--dim);margin-top:4px;font-weight:500}
+
+.testi{position:relative;padding-top:32px}
+.testi .quote{position:absolute;top:6px;left:22px;font-size:52px;line-height:1;color:var(--accent);opacity:.3;font-family:Georgia,serif;font-weight:700}
+.testi p{font-size:14.5px;color:var(--text);font-style:italic;margin-bottom:14px}
+.testi-meta{font-size:13px;color:var(--dim)}
+.testi-meta b{color:var(--text);font-weight:700}
+
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.contact-card{display:flex;align-items:center;gap:12px;padding:16px 18px;border-radius:14px;background:var(--card);border:1px solid var(--border);transition:all .25s}
+.contact-card:hover{background:var(--accent-soft);border-color:var(--accent-glow);transform:translateY(-3px)}
+.contact-card .ci{width:42px;height:42px;border-radius:11px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;font-size:20px;flex:0 0 42px}
+.contact-card div{min-width:0;overflow:hidden}
+.contact-card b{display:block;font-size:13px;font-weight:700;margin-bottom:1px}
+.contact-card span{font-size:12px;color:var(--dim);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+.footer{padding:32px 0 40px;text-align:center;border-top:1px solid var(--border);margin-top:20px;color:var(--dim2);font-size:12.5px}
+.footer b{color:var(--accent)}
+
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:640px){
+  .wrap{padding:0 18px}
+  .nav-in{padding:12px 18px}
+  .nav-links a{padding:6px 9px;font-size:12px}
+  .nav-links a:nth-child(n+4){display:none}
+  .hero{padding:56px 0 40px}
+  h1.hero-name{font-size:36px}
+  .hero-role{font-size:16px}
+  .hero-tag{font-size:14px}
+  .avatar{width:110px;height:110px;font-size:40px}
+  .section{padding:48px 0}
+  .section-head h2{font-size:26px}
+  .lead{font-size:15px}
+  .grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .stat-n{font-size:26px}
+  .contact-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-in">
+    <div class="nav-logo">
+      <div class="dot">${esc(initials(s.name))}</div>
+      <span>${esc(s.name)}</span>
+    </div>
+    <div class="nav-links">${navLinks.join('')}</div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="avatar">${avatar}</div>
+    <div class="eyebrow-pill">${esc(t.hero)} · ${esc(t.label.toUpperCase())}</div>
+    <h1 class="hero-name">${esc(first)}${rest?' <span>'+esc(rest)+'</span>':''}</h1>
+    <div class="hero-role">${esc(s.role)}${s.loc?' · 📍 '+esc(s.loc):''}</div>
+    ${s.tag?`<p class="hero-tag">${esc(s.tag)}</p>`:''}
+    <div class="hero-cta">
+      ${wa?`<a class="btn-primary" href="${wa}" target="_blank" rel="noopener">💬 WhatsApp</a>`:''}
+      ${email?`<a class="btn-ghost" href="mailto:${esc(email)}">✉️ Email</a>`:''}
+      ${!wa&&!email?`<a class="btn-primary" href="#contact">Get In Touch</a>`:''}
+    </div>
+  </div>
+</header>
+
+${sectionsHTML}
+
+<footer class="footer">
+  Made with ❤️ by <b>${esc(s.name)}</b> · Built with Sajeel Mods Portfolio Builder
+</footer>
+
+<script>
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, {threshold: 0.12});
+    els.forEach(function(el){ io.observe(el); });
+  } else {
+    els.forEach(function(el){ el.classList.add('visible'); });
+  }
+})();
+</`+`script>
+</body>
+</html>`;
+}
+
+/* ===== RENDER LISTS ===== */
+function renderProjects(){
+  const box = $('projectsList');
+  box.innerHTML = '';
+  if (!state.projects.length) state.projects.push({t:'',d:''});
+  state.projects.forEach((p,i)=>{
+    const el = document.createElement('div');
+    el.className = 'list-item';
+    el.innerHTML = `
+      <div class="li-head"><span class="li-num">Project ${i+1}</span><button class="icon-btn remove">✕</button></div>
+      <input type="text" class="li-t" placeholder="Project title" value="${esc(p.t)}">
+      <input type="text" class="li-d" placeholder="Short description" value="${esc(p.d)}">
+    `;
+    el.querySelector('.li-t').addEventListener('input',e=>{p.t=e.target.value;scheduleSave();updatePreview();});
+    el.querySelector('.li-d').addEventListener('input',e=>{p.d=e.target.value;scheduleSave();updatePreview();});
+    el.querySelector('.remove').addEventListener('click',()=>{state.projects.splice(i,1);renderProjects();scheduleSave();updatePreview();});
+    box.appendChild(el);
+  });
+}
+function renderServices(){
+  const box = $('servicesList');
+  box.innerHTML = '';
+  state.services.forEach((x,i)=>{
+    const el = document.createElement('div');
+    el.className = 'list-item';
+    el.innerHTML = `
+      <div class="li-head"><span class="li-num">Service ${i+1}</span><button class="icon-btn remove">✕</button></div>
+      <input type="text" class="li-t" placeholder="Service name" value="${esc(x.t)}">
+      <input type="text" class="li-d" placeholder="Short description" value="${esc(x.d)}">
+    `;
+    el.querySelector('.li-t').addEventListener('input',e=>{x.t=e.target.value;scheduleSave();updatePreview();});
+    el.querySelector('.li-d').addEventListener('input',e=>{x.d=e.target.value;scheduleSave();updatePreview();});
+    el.querySelector('.remove').addEventListener('click',()=>{state.services.splice(i,1);renderServices();scheduleSave();updatePreview();});
+    box.appendChild(el);
+  });
+}
+function renderStats(){
+  const box = $('statsList');
+  box.innerHTML = '';
+  state.stats.forEach((x,i)=>{
+    const el = document.createElement('div');
+    el.className = 'list-item';
+    el.innerHTML = `
+      <div class="li-head"><span class="li-num">Stat ${i+1}</span><button class="icon-btn remove">✕</button></div>
+      <div class="li-row">
+        <input type="text" class="li-n" placeholder="Value (50+)" value="${esc(x.n)}" style="max-width:110px">
+        <input type="text" class="li-l" placeholder="Label (Clients)" value="${esc(x.l)}">
+      </div>
+    `;
+    el.querySelector('.li-n').addEventListener('input',e=>{x.n=e.target.value;scheduleSave();updatePreview();});
+    el.querySelector('.li-l').addEventListener('input',e=>{x.l=e.target.value;scheduleSave();updatePreview();});
+    el.querySelector('.remove').addEventListener('click',()=>{state.stats.splice(i,1);renderStats();scheduleSave();updatePreview();});
+    box.appendChild(el);
+  });
+}
+function renderTestimonials(){
+  const box = $('testiList');
+  box.innerHTML = '';
+  state.testimonials.forEach((x,i)=>{
+    const el = document.createElement('div');
+    el.className = 'list-item';
+    el.innerHTML = `
+      <div class="li-head"><span class="li-num">Testimonial ${i+1}</span><button class="icon-btn remove">✕</button></div>
+      <input type="text" class="li-q" placeholder="Client feedback" value="${esc(x.q)}">
+      <div class="li-row">
+        <input type="text" class="li-n" placeholder="Name" value="${esc(x.name)}">
+        <input type="text" class="li-r" placeholder="Role (optional)" value="${esc(x.role||'')}">
+      </div>
+    `;
+    el.querySelector('.li-q').addEventListener('input',e=>{x.q=e.target.value;scheduleSave();updatePreview();});
+    el.querySelector('.li-n').addEventListener('input',e=>{x.name=e.target.value;scheduleSave();updatePreview();});
+    el.querySelector('.li-r').addEventListener('input',e=>{x.role=e.target.value;scheduleSave();updatePreview();});
+    el.querySelector('.remove').addEventListener('click',()=>{state.testimonials.splice(i,1);renderTestimonials();scheduleSave();updatePreview();});
+    box.appendChild(el);
+  });
+}
+function renderSkills(){
+  const box = $('skillsChips');
+  box.innerHTML = '';
+  state.skills.forEach((s,i)=>{
+    const chip = document.createElement('span');
+    chip.className = 'skill-chip';
+    chip.innerHTML = `<span>${esc(s)}</span><button>✕</button>`;
+    chip.querySelector('button').addEventListener('click',()=>{
+      state.skills.splice(i,1);renderSkills();scheduleSave();updatePreview();
+    });
+    box.appendChild(chip);
+  });
+}
+
+function readStaticFields(){
+  state.name = $('fName').value.trim();
+  state.role = $('fRole').value.trim();
+  state.tag = $('fTag').value.trim();
+  state.about = $('fAbout').value.trim();
+  state.loc = $('fLoc').value.trim();
+  state.socials.wa = $('fWa').value.trim();
+  state.socials.email = $('fEmail').value.trim();
+  state.socials.instagram = $('fIg').value.trim();
+  state.socials.facebook = $('fFb').value.trim();
+  state.socials.twitter = $('fTw').value.trim();
+  state.socials.linkedin = $('fLi').value.trim();
+  state.socials.github = $('fGh').value.trim();
+  state.socials.youtube = $('fYt').value.trim();
+  state.socials.tiktok = $('fTt').value.trim();
+}
+function writeStaticFields(){
+  $('fName').value = state.name;
+  $('fRole').value = state.role;
+  $('fTag').value = state.tag;
+  $('fAbout').value = state.about;
+  $('fLoc').value = state.loc;
+  $('fWa').value = state.socials.wa;
+  $('fEmail').value = state.socials.email;
+  $('fIg').value = state.socials.instagram;
+  $('fFb').value = state.socials.facebook;
+  $('fTw').value = state.socials.twitter;
+  $('fLi').value = state.socials.linkedin;
+  $('fGh').value = state.socials.github;
+  $('fYt').value = state.socials.youtube;
+  $('fTt').value = state.socials.tiktok;
+}
+function syncAllUI(){
+  document.querySelectorAll('#typeSeg button').forEach(b=>b.classList.toggle('on',b.dataset.t===state.type));
+  document.querySelectorAll('#colorSw .sw').forEach(s=>s.classList.toggle('on',s.dataset.c===state.accent));
+  $('accentCustom').value = state.accent;
+  $('fontSel').value = state.font;
+  document.querySelectorAll('#siteThemeSeg button').forEach(b=>b.classList.toggle('on',b.dataset.v===state.siteTheme));
+  document.querySelectorAll('#sectionsGrid input').forEach(cb=>cb.checked = !!state.sections[cb.dataset.k]);
+  $('photoPrev').innerHTML = state.photo
+    ? `<img src="${state.photo}" alt="Profile">`
+    : esc(initials(state.name));
+}
+
+let pvTimer;
+function updatePreview(){
+  clearTimeout(pvTimer);
+  pvTimer = setTimeout(()=>{
+    readStaticFields();
+    const html = buildHTML(state);
+    $('pv').srcdoc = html;
+    $('photoPrev').innerHTML = state.photo
+      ? `<img src="${state.photo}" alt="Profile">`
+      : esc(initials(state.name));
+  }, 120);
+}
+
+let saveTimer;
+function scheduleSave(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(()=>{
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e){}
+  }, 500);
+}
+
+function loadSaved(){
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw){ state = Object.assign(state, JSON.parse(raw)); return true; }
+  } catch(e){}
+  return false;
+}
+
+function initFromState(){
+  writeStaticFields();
+  syncAllUI();
+  renderProjects();
+  renderServices();
+  renderStats();
+  renderTestimonials();
+  renderSkills();
+  updatePreview();
+}
+
+/* ===== EVENTS ===== */
+document.querySelectorAll('#tabs .tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('#tabs .tab').forEach(t=>t.classList.toggle('on',t===tab));
+    document.querySelectorAll('.tab-panel').forEach(p=>{
+      p.classList.toggle('on', p.id === 'panel-'+tab.dataset.tab);
+    });
+  });
+});
+
+document.querySelectorAll('#typeSeg button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    state.type = b.dataset.t;
+    state.accent = TYPES[state.type].accent;
+    syncAllUI();scheduleSave();updatePreview();
+  });
+});
+
+document.querySelectorAll('#colorSw .sw').forEach(sw=>{
+  sw.addEventListener('click',()=>{
+    state.accent = sw.dataset.c;
+    syncAllUI();scheduleSave();updatePreview();
+  });
+});
+$('accentCustom').addEventListener('input',e=>{
+  state.accent = e.target.value;
+  document.querySelectorAll('#colorSw .sw').forEach(s=>s.classList.remove('on'));
+  scheduleSave();updatePreview();
+});
+
+$('fontSel').addEventListener('change',e=>{state.font=e.target.value;scheduleSave();updatePreview();});
+document.querySelectorAll('#siteThemeSeg button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    state.siteTheme = b.dataset.v;
+    document.querySelectorAll('#siteThemeSeg button').forEach(x=>x.classList.toggle('on',x===b));
+    scheduleSave();updatePreview();
+  });
+});
+document.querySelectorAll('#sectionsGrid input').forEach(cb=>{
+  cb.addEventListener('change',()=>{
+    state.sections[cb.dataset.k] = cb.checked;
+    scheduleSave();updatePreview();
+  });
+});
+
+['fName','fRole','fTag','fAbout','fLoc','fWa','fEmail','fIg','fFb','fTw','fLi','fGh','fYt','fTt'].forEach(id=>{
+  $(id).addEventListener('input',()=>{scheduleSave();updatePreview();});
+});
+
+$('skillInput').addEventListener('keydown',e=>{
+  if (e.key==='Enter'||e.key===','){
+    e.preventDefault();
+    const v = e.target.value.trim().replace(/,/g,'');
+    if (v){ state.skills.push(v); e.target.value=''; renderSkills(); scheduleSave(); updatePreview(); }
+  }
+});
+$('skillInput').addEventListener('blur',e=>{
+  const v = e.target.value.trim().replace(/,/g,'');
+  if (v){ state.skills.push(v); e.target.value=''; renderSkills(); scheduleSave(); updatePreview(); }
+});
+
+$('addProject').addEventListener('click',()=>{state.projects.push({t:'',d:''});renderProjects();scheduleSave();updatePreview();});
+$('addService').addEventListener('click',()=>{state.services.push({t:'',d:''});renderServices();scheduleSave();updatePreview();});
+$('addStat').addEventListener('click',()=>{state.stats.push({n:'',l:''});renderStats();scheduleSave();updatePreview();});
+$('addTesti').addEventListener('click',()=>{state.testimonials.push({q:'',name:'',role:''});renderTestimonials();scheduleSave();updatePreview();});
+
+function handlePhotoFile(file){
+  if (!file) return;
+  if (!file.type.startsWith('image/')){ toast('Image file chuno','error'); return; }
+  if (file.size > 8*1024*1024){ toast('Image 8MB se choti honi chahiye','error'); return; }
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const img = new Image();
+    img.onload = () => {
+      const max = 400;
+      let {width:w, height:h} = img;
+      if (w>h){ if (w>max){ h = h*max/w; w = max; } }
+      else { if (h>max){ w = w*max/h; h = max; } }
+      const c = document.createElement('canvas');
+      c.width=w;c.height=h;
+      c.getContext('2d').drawImage(img,0,0,w,h);
+      state.photo = c.toDataURL('image/jpeg',0.85);
+      syncAllUI();scheduleSave();updatePreview();
+      toast('Photo lag gayi ✅','success');
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+$('uploadBtn').addEventListener('click',e=>{e.stopPropagation();$('fileInp').click();});
+$('photoUploader').addEventListener('click',()=>$('fileInp').click());
+$('fileInp').addEventListener('change',e=>{handlePhotoFile(e.target.files[0]);e.target.value='';});
+$('removePhoto').addEventListener('click',e=>{
+  e.stopPropagation();
+  state.photo=null;$('fileInp').value='';
+  syncAllUI();scheduleSave();updatePreview();
+  toast('Photo remove ho gayi');
+});
+const up = $('photoUploader');
+['dragenter','dragover'].forEach(ev=>up.addEventListener(ev,e=>{e.preventDefault();up.classList.add('drag');}));
+['dragleave','drop'].forEach(ev=>up.addEventListener(ev,e=>{e.preventDefault();up.classList.remove('drag');}));
+up.addEventListener('drop',e=>{if(e.dataTransfer.files[0])handlePhotoFile(e.dataTransfer.files[0]);});
+
+document.querySelectorAll('#deviceRow button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('#deviceRow button').forEach(x=>x.classList.toggle('on',x===b));
+    $('pvWrap').className = 'pv-wrap ' + b.dataset.d;
+  });
+});
+
+$('sampleBtn').addEventListener('click',()=>{
+  const s = SAMPLES[state.type] || SAMPLES.designer;
+  state = Object.assign({}, state, {
+    name:s.name,role:s.role,tag:s.tag,about:s.about,loc:s.loc,
+    skills:s.skills.slice(),
+    projects:s.projects.map(x=>({...x})),
+    services:s.services.map(x=>({...x})),
+    stats:s.stats.map(x=>({...x})),
+    testimonials:s.testimonials.map(x=>({...x})),
+    socials:{...s.socials},
+    accent:TYPES[state.type].accent
+  });
+  state.sections.services = true;
+  state.sections.stats = true;
+  state.sections.testimonials = s.testimonials.length > 0;
+  initFromState();scheduleSave();
+  toast('Sample load ho gaya ✨','success');
+});
+
+$('resetBtn').addEventListener('click',()=>{
+  if (!confirm('Sab data clear ho jayega. Confirm?')) return;
+  state = {
+    type:'designer',accent:'#ff3366',font:'Poppins',siteTheme:'dark',
+    photo:null,name:'',role:'',tag:'',about:'',loc:'',
+    skills:[],projects:[{t:'',d:''}],services:[],stats:[],testimonials:[],
+    socials:{wa:'',email:'',instagram:'',facebook:'',twitter:'',linkedin:'',github:'',youtube:'',tiktok:''},
+    sections:{about:true,skills:true,projects:true,services:false,stats:false,testimonials:false,contact:true}
+  };
+  initFromState();scheduleSave();
+  toast('Form reset ho gaya','success');
+});
+
+$('dlBtn').addEventListener('click',()=>{
+  readStaticFields();
+  const html = buildHTML(state);
+  const blob = new Blob([html],{type:'text/html;charset=utf-8'});
+  const a = document.createElement('a');
+  const slug = (state.name||'portfolio').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'portfolio';
+  a.download = slug+'-portfolio.html';
+  if (typeof URL.createObjectURL==='function'){
+    a.href = URL.createObjectURL(blob);
+    a.click();
+    setTimeout(()=>URL.revokeObjectURL(a.href),5000);
+  } else {
+    a.href = 'data:text/html;charset=utf-8,'+encodeURIComponent(html);
+    a.click();
+  }
+  toast('Download ho gaya ⬇️','success');
+});
+
+$('copyBtn').addEventListener('click',async()=>{
+  readStaticFields();
+  const html = buildHTML(state);
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      await navigator.clipboard.writeText(html);
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = html;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    }
+    $('copyBtn').textContent = '✅ Copied!';
+    toast('HTML clipboard mein copy ho gaya','success');
+    setTimeout(()=>{$('copyBtn').textContent='📋 Copy HTML';},2200);
+  } catch(e){
+    toast('Copy fail — please manual copy karo','error');
+  }
+});
+
+/* ===== DEPLOY ===== */
+$('deployBtn').addEventListener('click', async ()=>{
+  readStaticFields();
+
+  // Validation
+  const msg = $('deployMsg');
+  msg.textContent = '';
+  msg.classList.remove('ok');
+
+  if (!state.name || !state.role){
+    msg.textContent = '⚠ Name aur Role zaroor bharo (Identity tab).';
+    toast('Name aur Role required hain','error');
+    return;
+  }
+
+  const html = buildHTML(state);
+
+  // Generate safe project name
+  const baseSlug = (state.name + '-' + Date.now().toString(36))
+    .toLowerCase()
+    .replace(/[^a-z0-9-]/g,'-')
+    .replace(/-+/g,'-')
+    .replace(/^-|-$/g,'')
+    .slice(0,40) || 'portfolio';
+
+  const btn = $('deployBtn');
+  const btnHTML = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<span>⏳ DEPLOYING...</span>';
+  $('emptyDeploy').style.display = 'none';
+  $('deployBox').style.display = 'none';
+  msg.textContent = 'Uploading to Sajeel Hosting... please wait (10-30 seconds)';
+
+  try {
+    const res = await fetch(DEPLOY_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ html, name: baseSlug })
+    });
+
+    let data;
+    try { data = await res.json(); }
+    catch(e){ throw new Error('Server returned invalid response. Check API endpoint.'); }
+
+    if (!res.ok || data.error){
+      throw new Error(data.error || ('HTTP ' + res.status));
+    }
+
+    if (!data.url){
+      throw new Error('No URL returned from deploy API.');
+    }
+
+    // Show result
+    $('deployLink').value = data.url;
+    $('openDeploy').href = data.url;
+    $('deployBox').style.display = 'block';
+    msg.textContent = '✅ Live! Link neeche copy karo.';
+    msg.classList.add('ok');
+    toast('Deploy successful! 🎉','success');
+
+  } catch(err){
+    console.error('Deploy error:', err);
+    msg.textContent = '❌ Deploy failed: ' + err.message;
+    toast('Deploy failed','error');
+    $('emptyDeploy').style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = btnHTML;
+  }
+});
+
+$('copyDeploy').addEventListener('click',async()=>{
+  const val = $('deployLink').value;
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      await navigator.clipboard.writeText(val);
+    } else {
+      $('deployLink').select();document.execCommand('copy');
+    }
+    $('copyDeploy').textContent = '✓';
+    toast('Live link copy ho gaya','success');
+    setTimeout(()=>$('copyDeploy').textContent='Copy',1500);
+  } catch(e){ toast('Copy fail','error'); }
+});
+
+/* ===== BOOT ===== */
+if (!loadSaved()){
+  const s = SAMPLES.designer;
+  Object.assign(state, {
+    name:s.name,role:s.role,tag:s.tag,about:s.about,loc:s.loc,
+    skills:s.skills.slice(),
+    projects:s.projects.map(x=>({...x})),
+    services:s.services.map(x=>({...x})),
+    stats:s.stats.map(x=>({...x})),
+    testimonials:s.testimonials.map(x=>({...x})),
+    socials:{...s.socials}
+  });
+  state.sections.services = true;
+  state.sections.stats = true;
+  state.sections.testimonials = true;
+}
+initFromState();
+
+})();
+</script>
+</body>
+</html>
